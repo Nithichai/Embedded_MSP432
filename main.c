@@ -5,6 +5,7 @@
 	
 void SysTick_Init(void);
 void SysTick_wait(uint32_t delay);
+void SysTick_wait1ms(uint32_t delay);
 void Port_Init(void);
 void Forward_Light(void);
 void Backward_Light(void);
@@ -23,10 +24,12 @@ int main(void) {
 		} else if (Input_SW_P1_4 == 0x00) {
 			isBackward = 1;
 		}
-		if (isBackward) {
-			Backward_Light();
-		} else {
+		if (isBackward == 0) {
 			Forward_Light();
+			// P2OUT = 0x01;
+		} else {
+			Backward_Light();
+			// P2OUT = 0x03;
 		}
 	}
 }
@@ -41,7 +44,14 @@ void SysTick_Init(void) {
 void SysTick_wait(uint32_t delay) {
 	SYSTICK_STRVR = delay - 1;
 	SYSTICK_STCVR = 0;
-	while ((SYSTICK_STCSR & 0x000100000) == 0) {
+	while ((SYSTICK_STCSR & 0x00010000) == 0) {
+	}
+}
+
+void SysTick_wait1ms(uint32_t delay) {
+	uint32_t i;
+	for (i = 0; i < delay; i++) {
+		SysTick_wait(3000);
 	}
 }
 
@@ -59,16 +69,20 @@ void Port_Init(void) {
 
 void Forward_Light(void) {
 	P2OUT = 0x01;
-	for (int i = 0; i < 3; i++) {
+	SysTick_wait1ms(1000);
+	uint8_t i;
+	for (i = 0; i < 2; i++) {
 		P2OUT = P2OUT << 1;
-		SysTick_wait(3000000);
+		SysTick_wait1ms(1000);
 	}
 }
 
 void Backward_Light(void) {
 	P2OUT = 0x04;
-	for (int i = 0; i < 3; i++) {
+	SysTick_wait1ms(1000);
+	uint8_t i;
+	for (i = 0; i < 2; i++) {
 		P2OUT = P2OUT >> 1;
-		SysTick_wait(3000000);
+		SysTick_wait1ms(1000);
 	}
 }
