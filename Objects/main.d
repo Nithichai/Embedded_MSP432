@@ -10,4 +10,3 @@
 .\objects\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.1.1\CMSIS\Include\cmsis_armcc.h
 .\objects\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.1.1\CMSIS\Include\mpu_armv7.h
 .\objects\main.o: C:\Keil_v5\ARM\PACK\TexasInstruments\MSP432P4xx_DFP\3.2.1\Device\Include\system_msp432p401r.h
-.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
